@@ -1,5 +1,7 @@
 package com.yueking.core.config;
 
+import com.yueking.core.handler.MyAuthenticationFailureHandler;
+import com.yueking.core.handler.MyAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //表单提交
         http.formLogin()
                 //自定义登录页面
                 .loginPage("/login.html")
@@ -25,8 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 //对应表单提交地址
                 .loginProcessingUrl("/submitLogin")
-                .successForwardUrl("/toMain")
-                .failureForwardUrl("/toError");
+                //定义登录成功或失败重定向地址
+                // .successForwardUrl("/toMain")
+                // .failureForwardUrl("/toError")
+                //自定义登录成功或失败都处理器
+                .successHandler(new MyAuthenticationSuccessHandler("/main.html"))
+                .failureHandler(new MyAuthenticationFailureHandler("/error.html"));
+
+        //表单提交
 
         //授权
         http.authorizeRequests()
