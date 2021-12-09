@@ -20,5 +20,8 @@ public class LoginController {
         return "redirect:error.html";
     }
 
-
+    @RequestMapping("/toLogin")
+    public String showLogin() {
+        return "login";
+    }
 }

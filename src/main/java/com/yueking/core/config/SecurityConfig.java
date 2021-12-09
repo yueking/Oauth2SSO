@@ -27,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //表单提交
         http.formLogin()
                 //自定义登录页面
-                .loginPage("/login.html")
+                // .loginPage("/login.html")
+                .loginPage("/toLogin")
                 //自定义登录参数
                 .usernameParameter("username")
                 .passwordParameter("password")
@@ -46,7 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //授权
         http.authorizeRequests()
                 //配置不需要认证 放行资源 /login.html
-                .antMatchers("/login.html").permitAll()
+                // .antMatchers("/login.html").permitAll()
+                .antMatchers("/toLogin").permitAll()
                 .antMatchers("/error.html").permitAll()
                 // .antMatchers("/css/**","/js/**","/images/**").permitAll()
                 .antMatchers("/images/*.png").hasRole("Admin")
