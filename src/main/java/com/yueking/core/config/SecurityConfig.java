@@ -20,14 +20,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 //自定义登录页面
                 .loginPage("/login.html")
+                //自定义登录参数
+                .usernameParameter("username")
+                .passwordParameter("password")
                 //对应表单提交地址
-                .loginProcessingUrl("/login")
-                .successForwardUrl("/main");
+                .loginProcessingUrl("/submitLogin")
+                .successForwardUrl("/toMain")
+                .failureForwardUrl("/toError");
 
         //授权
         http.authorizeRequests()
                 //不需要认证 放行/login.html
                 .antMatchers("/login.html").permitAll()
+                .antMatchers("/error.html").permitAll()
                 //所有的请求都需要授权认证
                 .anyRequest().authenticated();
         //允许跨域访问

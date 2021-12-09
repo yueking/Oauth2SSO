@@ -10,9 +10,14 @@ public class LoginController {
         return "redirect:login.html";
     }
 
-    @RequestMapping("/main")
+    @RequestMapping("/toMain")
     public String main() {
         return "redirect:main.html";
+    }
+
+    @RequestMapping("/toError")
+    public String error() {
+        return "redirect:error.html";
     }
 
 
