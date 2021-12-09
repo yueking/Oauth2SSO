@@ -40,6 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(new MyAuthenticationSuccessHandler("/main.html"))
                 .failureHandler(new MyAuthenticationFailureHandler("/error.html"));
 
+        //退出登录
+        http.logout().logoutSuccessUrl("/login.html");
+
         //授权
         http.authorizeRequests()
                 //配置不需要认证 放行资源 /login.html
