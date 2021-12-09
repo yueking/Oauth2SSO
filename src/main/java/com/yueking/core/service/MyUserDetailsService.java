@@ -23,7 +23,7 @@ public class MyUserDetailsService implements UserDetailsService {
         // 2.比较密码 如果成功返回 UserDetails
         String encode = passwordEncoder.encode("123");
         if (passwordEncoder.matches("123", encode)) {
-            return new User(username,encode, AuthorityUtils.commaSeparatedStringToAuthorityList("admin,user"));
+            return new User(username,encode, AuthorityUtils.commaSeparatedStringToAuthorityList("admin,user,ROLE_roleName"));
         }else {
             throw new UsernameNotFoundException("密码错误");
         }
