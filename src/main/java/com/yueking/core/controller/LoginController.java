@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
     @RequestMapping("/")
     public String login(){
-        return "redirect:login.html";
+        return "login";
     }
 
     @RequestMapping("/toMain")
     public String main() {
-        return "redirect:main.html";
+        return "main";
     }
 
     @RequestMapping("/toError")

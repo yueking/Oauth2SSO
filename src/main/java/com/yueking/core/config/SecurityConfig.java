@@ -38,12 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // .successForwardUrl("/toMain")
                 // .failureForwardUrl("/toError")
                 //自定义登录成功或失败都处理器
-                .successHandler(new MyAuthenticationSuccessHandler("/main.html"))
+                .successHandler(new MyAuthenticationSuccessHandler("/toMain"))
                 .failureHandler(new MyAuthenticationFailureHandler("/error.html"));
 
         //退出登录
-        http.logout().logoutSuccessUrl("/login.html");
-
+        // http.logout().logoutSuccessUrl("/login.html");
+        http.logout().logoutSuccessUrl("/toLogin");
         //授权
         http.authorizeRequests()
                 //配置不需要认证 放行资源 /login.html
@@ -69,6 +69,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         //允许跨域访问
-        http.authorizeRequests().and().csrf().disable();
+        // http.authorizeRequests().and().csrf().disable();
     }
 }
