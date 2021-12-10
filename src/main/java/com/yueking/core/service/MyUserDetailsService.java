@@ -1,5 +1,7 @@
 package com.yueking.core.service;
 
+import com.yueking.core.entity.SysUser;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -14,12 +16,16 @@ public class MyUserDetailsService implements UserDetailsService {
     private PasswordEncoder passwordEncoder;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String encode = passwordEncoder.encode("123");
+        //1.根据用户名去数据库中查询用户信息
         if(!username.equals("admin")){
-            throw new UsernameNotFoundException("找不到用户");
-        }else{
-            if(passwordEncoder.matches())
+            throw new UsernameNotFoundException("用户不存在");
         }
-        return null;
+        // 2.比较密码 如果成功返回 UserDetails
+        String encode = passwordEncoder.encode("123");
+        if (passwordEncoder.matches("123", encode)) {
+            return new SysUser(username,encode, AuthorityUtils.commaSeparatedStringToAuthorityList("admin,user,ROLE_roleName"));
+        }else {
+            throw new UsernameNotFoundException("密码错误");
+        }
     }
 }
