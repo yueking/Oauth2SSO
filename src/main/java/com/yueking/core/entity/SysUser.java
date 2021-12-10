@@ -40,7 +40,4 @@ public class SysUser implements UserDetails {
         return true;
     }
 
-    public String getPassword() {
-        return null;
-    }
 }

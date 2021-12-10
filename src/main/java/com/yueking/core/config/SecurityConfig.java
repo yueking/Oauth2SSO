@@ -19,10 +19,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/oauth/**","/login/**","/logout/**","/version/**")
-                .permitAll()
+                .antMatchers("/oauth/**","/login/**","/logout/**","/version/**").permitAll()
                 .anyRequest()
                 .authenticated()
-                .and().csrf().disable();
+                .and()
+                //为什么要授权表单通过?
+                .formLogin()
+                .permitAll()
+                .and()
+                .csrf().disable();
     }
 }
