@@ -21,7 +21,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //1.实际项目一般不使用内存管理
         //配置客户、密钥、重定向地址、授权范围、授权类型:模式
         clients.inMemory()
-                .withClient("admin")
+                .withClient("myClientId")
                 .secret(passwordEncoder.encode("123"))
                 .redirectUris("http://www.baidu.com")
                 .scopes("all")

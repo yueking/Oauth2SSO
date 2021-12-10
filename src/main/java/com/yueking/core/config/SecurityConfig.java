@@ -19,11 +19,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                //放行授权服务上的操作
                 .antMatchers("/oauth/**","/login/**","/logout/**","/version/**").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                //为什么要授权表单通过?
+                //放行所有的表单验证?
                 .formLogin()
                 .permitAll()
                 .and()
