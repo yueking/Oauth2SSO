@@ -17,7 +17,7 @@ public class SysUser implements UserDetails {
     public List<GrantedAuthority> authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override
