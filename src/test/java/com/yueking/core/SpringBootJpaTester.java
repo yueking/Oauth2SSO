@@ -2,12 +2,17 @@ package com.yueking.core;
 
 import com.yueking.core.dao.entity.SysPermission;
 import com.yueking.core.dao.entity.SysRole;
+import com.yueking.core.dao.entity.SysUser;
 import com.yueking.core.dao.repository.PermissionDao;
 import com.yueking.core.dao.repository.RoleDao;
+import com.yueking.core.dao.repository.UserDao;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 
 @SpringBootTest
 public class SpringBootJpaTester {
@@ -16,6 +21,12 @@ public class SpringBootJpaTester {
 
     @Resource
     private RoleDao roleDao;
+
+    @Resource
+    private UserDao userDao;
+
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     @Test
     void jpa(){
@@ -68,5 +79,34 @@ public class SpringBootJpaTester {
         role.addPermission(p4);
 
         roleDao.saveAndFlush(role);
+    }
+
+    @Test
+    void addAdminUser() {
+        SysUser admin = new SysUser();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("admin"));
+
+        SysUser user = new SysUser();
+        user.setUsername("user");
+        user.setPassword(passwordEncoder.encode("user"));
+
+        SysRole adminRole = roleDao.findById(1l).get();
+        SysRole userRole = roleDao.findById(2l).get();
+
+        admin.addRole(adminRole);
+        user.addRole(userRole);
+
+        userDao.saveAndFlush(admin);
+        userDao.saveAndFlush(user);
+    }
+
+    @Test
+    void showUser(){
+        SysUser sysUser = userDao.findById(1l).get();
+        Collection<? extends GrantedAuthority> authorities = sysUser.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            System.out.println(authority.getAuthority());
+        }
     }
 }

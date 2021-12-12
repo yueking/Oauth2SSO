@@ -23,6 +23,11 @@ public class SysUser implements UserDetails, Serializable {
     private String username;
     private String password;
 
+    private boolean accountNonExpired = true;
+    private boolean accountNonLocked = true;
+    private boolean credentialsNonExpired = true;
+    private boolean enabled = true;
+
     @ManyToMany
     @JoinTable(name = "sys_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")})
     public List<SysRole> roles = new LinkedList<>();
@@ -47,24 +52,4 @@ public class SysUser implements UserDetails, Serializable {
     public void removeRole(SysRole role) {
         this.roles.remove(role);
     }
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
 }
