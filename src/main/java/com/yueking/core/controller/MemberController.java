@@ -1,10 +1,10 @@
-package com.yueking.core.service;
+package com.yueking.core.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class MemberService {
+public class MemberController {
     @RequestMapping("/addMember")
     public String addMember() {
         return "addMember";

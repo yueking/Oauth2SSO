@@ -27,6 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/error/**").permitAll();
         //配置认证方式 token 表单 basic模式
         http.authorizeRequests()
                 .antMatchers("/addMember").hasAuthority("addMember")
