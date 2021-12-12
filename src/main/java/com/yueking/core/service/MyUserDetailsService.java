@@ -12,23 +12,14 @@ import javax.annotation.Resource;
 public class MyUserDetailsService implements UserDetailsService {
     @Resource
     private UserDao userDao;
+
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserDetails userDetails = null;
-        // userDetails = this.userCache.getUserFromCache(username);
-        // if (userDetails == null) {
-        //     try {
-        //         SysUsers sysUsers = userDao.findUserByName(username);
-        //         if (sysUsers == null) {
-        //             throw new UsernameNotFoundException(username);
-        //         }
-        //         userDetails = new SysUserDetails(sysUsers);
-        //         System.out.println("==========load user:"+username);
-        //     } catch (Exception e) {
-        //         throw new UsernameNotFoundException(username);
-        //     }
-        //     userCache.putUserInCache(userDetails);
-        // }
+        userDetails = userDao.findById(username).get();
+        if (userDetails == null) {
+            throw new UsernameNotFoundException(username);
+        }
         return userDetails;
     }
 }
