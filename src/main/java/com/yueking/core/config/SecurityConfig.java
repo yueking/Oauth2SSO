@@ -15,14 +15,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //登录认证
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder().encode("123"))
-                .authorities("addMember","delMember","updateMember","showMember");
-        auth.inMemoryAuthentication().withUser("add").password(passwordEncoder().encode("add")).authorities("addMember");
-        auth.inMemoryAuthentication().withUser("del").password(passwordEncoder().encode("del")).authorities("delMember");
-        auth.inMemoryAuthentication().withUser("update").password(passwordEncoder().encode("update")).authorities("updateMember");
-        auth.inMemoryAuthentication().withUser("show").password(passwordEncoder().encode("show")).authorities("showMember");
+        // auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("123")).authorities("addMember","delMember","updateMember","showMember");
+        // auth.inMemoryAuthentication().withUser("add").password(passwordEncoder().encode("add")).authorities("addMember");
+        // auth.inMemoryAuthentication().withUser("del").password(passwordEncoder().encode("del")).authorities("delMember");
+        // auth.inMemoryAuthentication().withUser("update").password(passwordEncoder().encode("update")).authorities("updateMember");
+        // auth.inMemoryAuthentication().withUser("show").password(passwordEncoder().encode("show")).authorities("showMember");
     }
 
     @Override

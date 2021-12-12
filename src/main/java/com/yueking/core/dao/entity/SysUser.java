@@ -15,11 +15,10 @@ import java.util.List;
 @Entity
 public class SysUser implements UserDetails, Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @GenericGenerator(name = "persistenceGenerator", strategy = "increment")
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // @GenericGenerator(name = "persistenceGenerator", strategy = "increment")
     @Column(name = "user_id")
-    private Long id;
-
+    // private Long id;
     private String username;
     private String password;
 

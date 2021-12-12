@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
 import java.util.Collection;
+import java.util.List;
 
 @SpringBootTest
 public class SpringBootJpaTester {
@@ -29,57 +30,65 @@ public class SpringBootJpaTester {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    void jpa(){
-        System.out.println("jpa...");
-        SysPermission permission = new SysPermission();
-        permission.setPermName("perm1");
-        permission.setPermTag("perm1Tag");
-        permission.setPermDesc("perm1Desc");
-        permissionDao.saveAndFlush(permission);
+    void addPerm(){
+        SysPermission p1 = new SysPermission();
+        p1.setPermName("addPerm");
+        p1.setPermTag("addMember");
+        p1.setPermDesc("addPermDesc");
+        permissionDao.saveAndFlush(p1);
+
+        SysPermission p2 = new SysPermission();
+        p2.setPermName("delPerm");
+        p2.setPermTag("delMember");
+        p2.setPermDesc("delPermDesc");
+        permissionDao.saveAndFlush(p2);
+
+        SysPermission p3 = new SysPermission();
+        p3.setPermName("updatePerm");
+        p3.setPermTag("updateMember");
+        p3.setPermDesc("updatePermDesc");
+        permissionDao.saveAndFlush(p3);
+
+        SysPermission p4 = new SysPermission();
+        p4.setPermName("showPerm");
+        p4.setPermTag("showMember");
+        p4.setPermDesc("showPermDesc");
+        permissionDao.saveAndFlush(p4);
     }
 
     @Test
     void addRole(){
-        SysRole role1 = new SysRole();
-        role1.setRoleName("roleName1");
-        role1.setRoleTag("roleTag1");
-        role1.setRoleDesc("roleDesc1");
+        SysRole adminRole = new SysRole();
+        adminRole.setRoleName("adminRole");
+        adminRole.setRoleTag("adminRoleTag");
+        adminRole.setRoleDesc("管理员角色");
 
-        roleDao.saveAndFlush(role1);
+        roleDao.saveAndFlush(adminRole);
+
+        SysRole userRole = new SysRole();
+        userRole.setRoleName("userRole");
+        userRole.setRoleTag("userRoleTag");
+        userRole.setRoleDesc("员工角色");
+
+        roleDao.saveAndFlush(userRole);
     }
 
     @Test
     void modifyRole(){
-        long roleId = 1;
-        SysRole role = roleDao.findById(roleId).get();
+        SysRole role_admin = roleDao.findById(1l).get();
+        SysRole role_user = roleDao.findById(2l).get();
 
-        System.out.println(role);
+        List<SysPermission> permissionList = permissionDao.findAll();
+        role_admin.setPermissions(permissionList);
 
-        SysPermission p1 = permissionDao.findById(1l).get();
-        SysPermission p2 = permissionDao.findById(2l).get();
+        role_user.addPermission(permissionDao.findById(4l).get());
 
-        role.addPermission(p1);
-        role.addPermission(p2);
+        roleDao.saveAndFlush(role_admin);
+        roleDao.saveAndFlush(role_user);
 
-        roleDao.saveAndFlush(role);
 
     }
 
-    @Test
-    void createRole() {
-        SysRole role = new SysRole();
-        role.setRoleName("roleName2");
-        role.setRoleTag("roleTag2");
-        role.setRoleDesc("roleDesc2");
-
-        SysPermission p3 = permissionDao.findById(3l).get();
-        SysPermission p4 = permissionDao.findById(4l).get();
-
-        role.addPermission(p3);
-        role.addPermission(p4);
-
-        roleDao.saveAndFlush(role);
-    }
 
     @Test
     void addAdminUser() {
@@ -103,7 +112,7 @@ public class SpringBootJpaTester {
 
     @Test
     void showUser(){
-        SysUser sysUser = userDao.findById(1l).get();
+        SysUser sysUser = userDao.findById("admin").get();
         Collection<? extends GrantedAuthority> authorities = sysUser.getAuthorities();
         for (GrantedAuthority authority : authorities) {
             System.out.println(authority.getAuthority());
