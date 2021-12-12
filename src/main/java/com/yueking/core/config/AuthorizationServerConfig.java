@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -72,12 +73,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clients.inMemory()
                 .withClient("myClientId")
                 .secret(passwordEncoder.encode("123"))
-                .redirectUris("http://www.baidu.com")
+                .redirectUris("http://localhost:8081/login")
+                // .redirectUris("http://www.baidu.com")
                 .scopes("all")
                 //令牌过期时间60秒
                 .accessTokenValiditySeconds(60)
                 //刷新令牌过期时间1小时
                 .refreshTokenValiditySeconds(86400)
+                //自动授权
+                .autoApprove(true)
                 /**
                  * 授权类型
                  * 授权码模式 简化模式 密码模式 客户端模式
@@ -86,5 +90,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                  * refresh_token:刷新令牌
                  */
                 .authorizedGrantTypes("authorization_code","password", "refresh_token");
+    }
+
+    /**
+     * 单点登录必须的配置
+     * @param security
+     * @throws Exception
+     */
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        //单点登录必须配置:必须要身份认证
+        security.tokenKeyAccess("isAuthenticated()");
     }
 }
