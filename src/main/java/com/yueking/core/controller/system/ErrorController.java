@@ -1,4 +1,4 @@
-package com.yueking.core.controller;
+package com.yueking.core.controller.system;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
