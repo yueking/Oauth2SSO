@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.yueking</groupId>
-    <artifactId>SpringBootBaseDemo</artifactId>
+    <artifactId>SpringBootOauth2Base</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SpringBootBaseDemo</name>
     <description>Demo project for Spring Boot</description>

@@ -1,24 +1,21 @@
 package com.yueking.core.dao.entity;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+
 @Data
-@NoArgsConstructor
+@Entity
 public class SysPermission implements GrantedAuthority, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "persistenceGenerator", strategy = "increment")
-    private Integer id;
+    @Column(name = "perm_id")
+    private Long id;
     private String permName;
     private String permTag;
     private String permDesc;
