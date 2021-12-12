@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootBaseDemoApplicationTests {
-
+public class SpringBootJpaTester {
     @Test
-    void contextLoads() {
+    void jpa(){
+        System.out.println("jpa...");
     }
 }
