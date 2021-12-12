@@ -33,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // auth.inMemoryAuthentication().withUser("del").password(passwordEncoder().encode("del")).authorities("delMember");
         // auth.inMemoryAuthentication().withUser("update").password(passwordEncoder().encode("update")).authorities("updateMember");
         // auth.inMemoryAuthentication().withUser("show").password(passwordEncoder().encode("show")).authorities("showMember");
+        //配置 userDetailsService:加载用户 及配置 passwordEncoder:密码的加密与解码方式进行用户验证
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -51,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //         // 表单模式
         //         .formLogin();
 
-        //从数据库中动态加载 权限Tag 权限Url
+        //从数据库中动态加载 权限Tag 权限Url 配置权限过滤规则
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry authorizeRequests = http.authorizeRequests();
 
         List<SysPermission> permissionList = permissionDao.findAll();
