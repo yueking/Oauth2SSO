@@ -28,30 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //登录认证
-        // auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("123")).authorities("addMember","delMember","updateMember","showMember");
-        // auth.inMemoryAuthentication().withUser("add").password(passwordEncoder().encode("add")).authorities("addMember");
-        // auth.inMemoryAuthentication().withUser("del").password(passwordEncoder().encode("del")).authorities("delMember");
-        // auth.inMemoryAuthentication().withUser("update").password(passwordEncoder().encode("update")).authorities("updateMember");
-        // auth.inMemoryAuthentication().withUser("show").password(passwordEncoder().encode("show")).authorities("showMember");
         //配置 userDetailsService:加载用户 及配置 passwordEncoder:密码的加密与解码方式进行用户验证
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        //配置认证方式 token 表单 basic模式
-        // http.authorizeRequests()
-        //         .antMatchers("/addMember").hasAuthority("addMember")
-        //         .antMatchers("/delMember").hasAuthority("delMember")
-        //         .antMatchers("/updateMember").hasAuthority("updateMember")
-        //         .antMatchers("/showMember").hasAuthority("showMember")
-        //         .antMatchers("/**")
-        //         .fullyAuthenticated().and()
-        //         // 基础模式
-        //         // .httpBasic();
-        //         // 表单模式
-        //         .formLogin();
-
         //从数据库中动态加载 权限Tag 权限Url 配置权限过滤规则
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry authorizeRequests = http.authorizeRequests();
 
@@ -59,8 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         for (SysPermission permission : permissionList) {
           authorizeRequests.antMatchers(permission.getPermName()).hasAuthority(permission.getPermTag());
         }
-        authorizeRequests.antMatchers("/failed/**").permitAll()
-                .antMatchers("/**").fullyAuthenticated().and().formLogin().and().csrf().disable();
+        authorizeRequests.antMatchers("/failed/**").permitAll();
+        authorizeRequests.antMatchers("/callback/**").permitAll()
+                .antMatchers("/**").fullyAuthenticated().and().httpBasic().and().csrf().disable();
 
     }
 
