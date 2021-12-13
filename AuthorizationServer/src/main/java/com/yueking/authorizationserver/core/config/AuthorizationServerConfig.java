@@ -40,7 +40,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .redirectUris("http://localhost:8080/callback")
                 /**
                  * 授权码模式 简化模式 密码模式 客户端模式
-                 * authorization_code refresh_token password client
+                 * authorization_code refresh_token password client_credentials implicit
                  */
                 .authorizedGrantTypes("authorization_code","refresh_token");
     }
