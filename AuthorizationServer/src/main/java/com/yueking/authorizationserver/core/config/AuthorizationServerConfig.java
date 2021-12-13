@@ -31,6 +31,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         // 允许表单提交
         security.allowFormAuthenticationForClients().checkTokenAccess("permitAll()");
+        //单点登录需要token验证通过
+        security.tokenKeyAccess("isAuthenticated()");
     }
 
     @Override
