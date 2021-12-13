@@ -1,10 +1,13 @@
 package com.yueking.authorizationserver.core.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 
 import javax.annotation.Resource;
@@ -17,6 +20,12 @@ import javax.annotation.Resource;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private AuthenticationManager authenticationManager;
+
+    @Resource
+    private UserDetailsService userDetailsService;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
@@ -42,6 +51,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                  * 授权码模式 简化模式 密码模式 客户端模式
                  * authorization_code refresh_token password client_credentials implicit
                  */
-                .authorizedGrantTypes("authorization_code","refresh_token");
+                .authorizedGrantTypes("authorization_code","refresh_token","password");
+    }
+
+    /**
+     * 密码模式需要 重载方法
+     * @param endpoints
+     * @throws Exception
+     */
+    @Override
+    public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+        endpoints.authenticationManager(authenticationManager).userDetailsService(userDetailsService);
     }
 }
