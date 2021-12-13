@@ -1,13 +1,11 @@
-package com.yueking.authorizationresourcesserver;
+package com.yueking;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AuthorizationResourcesServerApplicationTests {
-
+public class ResourcesServerApplicationTester {
     @Test
     void contextLoads() {
     }
-
 }
