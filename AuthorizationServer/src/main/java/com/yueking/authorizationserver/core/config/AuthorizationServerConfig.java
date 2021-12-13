@@ -1,4 +1,4 @@
-package com.yueking.core.config;
+package com.yueking.authorizationserver.core.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  */
 @Configuration
 @EnableAuthorizationServer
-public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Resource
     private PasswordEncoder passwordEncoder;
 
