@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         List<SysPermission> permissionList = permissionDao.findAll();
         for (SysPermission permission : permissionList) {
-          authorizeRequests.antMatchers(permission.getPermName()).hasAuthority(permission.getPermTag());
+            authorizeRequests.antMatchers(permission.getPermName()).hasAuthority(permission.getPermTag());
         }
         authorizeRequests.antMatchers("/failed/**").permitAll();
         authorizeRequests.antMatchers("/callback/**").permitAll()
